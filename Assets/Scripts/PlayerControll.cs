@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -44,6 +45,18 @@ public class PlayerControll : MonoBehaviour
 
             transform.RotateAround(transform.position, Vector3.up, _mouseInput.x);
             camera.RotateAround(camera.position, camera.right, _mouseInput.y);
+
+            _newCameraRot = camera.localEulerAngles;
+            
+            if (_newCameraRot.x > 85 && _newCameraRot.x < 180)
+            {
+                camera.localEulerAngles = new Vector3(85, 0, 0);
+            }
+
+            if (_newCameraRot.x < 275 && _newCameraRot.x > 180)
+            {
+                camera.localEulerAngles = new Vector3(275, 0, 0);
+            }
         }
         else
         {
