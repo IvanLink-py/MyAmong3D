@@ -6,14 +6,16 @@ using UnityEngine;
 public class PlayerControll : MonoBehaviour
 {
     private Rigidbody _myRig;
-    private Vector3 _stopForce;
     private Vector2 _mouseInput;
     private Vector3 _newCameraRot;
     private int _noCameraTimer;
 
+    public bool isLock = true;
+    public Transform spawnPoint;
+    
     public float speed;
-
-    public Transform camera;
+    
+    public Transform myCamera;
     public Vector2 sensitivity;
 
     // Start is called before the first frame update
@@ -23,9 +25,19 @@ public class PlayerControll : MonoBehaviour
         _noCameraTimer = 10;
     }
 
-    // Update is called once per frame
+    public void UnlockMoving()
+    {
+        if (!isLock) return;
+        isLock = false;
+        transform.position = spawnPoint.position;
+        transform.rotation = spawnPoint.rotation;
+        _myRig.isKinematic = false;
+    }
+    
     void FixedUpdate()
     {
+        if (isLock) return;
+        
         PlayerMovement();
         CameraUpdate();
     }
@@ -44,18 +56,18 @@ public class PlayerControll : MonoBehaviour
                            Vector2.down * (Input.GetAxis("Mouse Y") * sensitivity.y));
 
             transform.RotateAround(transform.position, Vector3.up, _mouseInput.x);
-            camera.RotateAround(camera.position, camera.right, _mouseInput.y);
+            myCamera.RotateAround(myCamera.position, myCamera.right, _mouseInput.y);
 
-            _newCameraRot = camera.localEulerAngles;
+            _newCameraRot = myCamera.localEulerAngles;
             
             if (_newCameraRot.x > 85 && _newCameraRot.x < 180)
             {
-                camera.localEulerAngles = new Vector3(85, 0, 0);
+                myCamera.localEulerAngles = new Vector3(85, 0, 0);
             }
 
             if (_newCameraRot.x < 275 && _newCameraRot.x > 180)
             {
-                camera.localEulerAngles = new Vector3(275, 0, 0);
+                myCamera.localEulerAngles = new Vector3(275, 0, 0);
             }
         }
         else
