@@ -1,21 +1,21 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Mirror;
 using UnityEngine;
 
-public class PlayerControll : MonoBehaviour
+public class PlayerControll : NetworkBehaviour
 {
     private Rigidbody _myRig;
     private Vector2 _mouseInput;
     private Vector3 _newCameraRot;
     private int _noCameraTimer;
-
-    public bool isLock = true;
-    public Transform spawnPoint;
+    
     
     public float speed;
     
     public Transform myCamera;
+    public bool hasCamera;
     public Vector2 sensitivity;
 
     // Start is called before the first frame update
@@ -24,21 +24,12 @@ public class PlayerControll : MonoBehaviour
         _myRig = transform.GetComponent<Rigidbody>();
         _noCameraTimer = 10;
     }
-
-    public void UnlockMoving()
-    {
-        if (!isLock) return;
-        isLock = false;
-        transform.position = spawnPoint.position;
-        transform.rotation = spawnPoint.rotation;
-        _myRig.isKinematic = false;
-    }
     
     void FixedUpdate()
     {
-        if (isLock) return;
-        
+        if (!hasAuthority) return;
         PlayerMovement();
+        if (!hasCamera) return;
         CameraUpdate();
     }
 
