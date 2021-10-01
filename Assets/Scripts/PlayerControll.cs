@@ -27,7 +27,7 @@ public class PlayerControll : NetworkBehaviour
     
     void FixedUpdate()
     {
-        if (!hasAuthority) return;
+        // if (!hasAuthority) return;
         PlayerMovement();
         if (!hasCamera) return;
         CameraUpdate();

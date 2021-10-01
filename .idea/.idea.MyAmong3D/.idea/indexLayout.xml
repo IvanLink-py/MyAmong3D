@@ -58,6 +58,7 @@
       <Path>Temp</Path>
       <Path>UserSettings</Path>
       <Path>obj</Path>
+      <Path>Дизайнерская документация</Path>
     </explicitExcludes>
   </component>
 </project>
