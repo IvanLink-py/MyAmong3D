@@ -10,17 +10,19 @@ public class PlayerControll : NetworkBehaviour
     private Vector2 _mouseInput;
     private Vector3 _newCameraRot;
     private int _noCameraTimer;
-    
-    
+
+    public GameManager gameManager;
     public float speed;
     
     public Transform myCamera;
-    public bool hasCamera;
     public Vector2 sensitivity;
 
     // Start is called before the first frame update
     void Start()
     {
+        
+        if (hasAuthority) gameManager.CameraToPlayer(transform);
+        
         _myRig = transform.GetComponent<Rigidbody>();
         _noCameraTimer = 10;
     }
@@ -29,7 +31,6 @@ public class PlayerControll : NetworkBehaviour
     {
         // if (!hasAuthority) return;
         PlayerMovement();
-        if (!hasCamera) return;
         CameraUpdate();
     }
 
